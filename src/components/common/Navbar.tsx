@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import { VscMenu } from "react-icons/vsc";
 import Logo from "@/assets/images/Istom-logo.png";
