@@ -4,7 +4,7 @@ import { ProductCard } from "../common";
 
 const ProductsList = ({ title }: { title: string }) => {
   return (
-    <section className="">
+    <section>
       <div className="flex flex-col gap-4 md:flex-row justify-between">
         <h2 className="text-[24px] md:text-[32px] font-bold">{title}</h2>
         <div className="flex items-center flex-wrap gap-3">
@@ -22,7 +22,7 @@ const ProductsList = ({ title }: { title: string }) => {
           </Button>
         </div>
       </div>
-      <div className="mt-16">
+      <div className="mt-10 md:mt-14">
         <ProductCard />
       </div>
     </section>

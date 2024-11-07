@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Footer, Navbar, Navigation } from "@/components/common";
 import "swiper/css";
+import { Providers } from "./providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistMono = localFont({
   src: [
@@ -47,10 +49,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistMono.className} antialiased`}>
-        <Navbar />
-        <Navigation />
-        {children}
-        <Footer />
+        <Providers>
+          <Toaster />
+          <Navbar />
+          <Navigation />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

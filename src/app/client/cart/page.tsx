@@ -13,9 +13,14 @@ import Link from "next/link";
 import EmptyCartIcon from "@/assets/images/empty-cart.svg";
 import Image from "next/image";
 import ProductsList from "@/components/common/ProductsList";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export default function Cart() {
-  const cart = [];
+  const cart = useSelector((state: RootState) => state.cart.cart);
+  const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
+  console.log(cart, totalPrice);
+
   return (
     <section className="py-6 ">
       <div className="container min-h-[450px] md:min-h-[600px]">
@@ -37,7 +42,7 @@ export default function Cart() {
           <div className="flex-1">
             <h1 className="text-[32px] font-bold">Корзина</h1>
             {cart.length > 0 ? (
-              <CartItem />
+              cart.map((item) => <CartItem key={item.id} product={item} />)
             ) : (
               <div
                 className="h-[300px]
@@ -65,7 +70,7 @@ export default function Cart() {
               <span className="text-[12px] text-[#818181]">
                 1 товар на общую сумму
               </span>
-              <h3 className="text-[24px] font-bold mb-3">16 500 ₽</h3>
+              <h3 className="text-[24px] font-bold mb-3">{totalPrice} ₽</h3>
               <Button
                 variant={"outline"}
                 className="text-[14px] border font-normal hover:brightness-[0.95] px-6 h-[50px] rounded-[4px] w-full"
@@ -79,11 +84,13 @@ export default function Cart() {
           )}
         </div>
       </div>
-      <div className="bg-[#F8F8F8] py-[50px] lg:py-[100px]">
-        <div className="container">
-          <ProductsList title={"Наши акции"} />
+      {cart.length < 1 && (
+        <div className="bg-[#F8F8F8] py-[50px] lg:py-[100px]">
+          <div className="container">
+            <ProductsList title={"Наши акции"} />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

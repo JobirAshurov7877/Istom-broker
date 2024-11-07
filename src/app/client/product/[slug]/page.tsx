@@ -19,6 +19,15 @@ import { Heart } from "lucide-react";
 import ProductsList from "@/components/common/ProductsList";
 import { Subscribe } from "@/components/common";
 import { ProductFeatues } from "@/components/client";
+import { useDispatch } from "react-redux";
+import { addProduct } from "@/store/cartSlice/cartSlice";
+const product = {
+  id: 1,
+  name: "ТОР Кламп № В5",
+  image: ProductImage,
+  price: 16500,
+  size: "M",
+};
 
 export default function ProductDetails() {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
@@ -28,6 +37,31 @@ export default function ProductDetails() {
     { label: "Степень растяжимости", value: "Низкая" },
     { label: "Цвет", value: "Светло-розовый" },
   ];
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(1);
+  const dispatch = useDispatch();
+  console.log(setSelectedSize);
+  const increaseQuantity = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity === 1) return;
+    setQuantity((prev) => prev - 1);
+  };
+
+  const handleAddToCart = () => {
+    dispatch(
+      addProduct({
+        ...product,
+        quantity: quantity,
+        size: selectedSize,
+        totalPrice: product.price * quantity,
+      })
+    );
+    setSelectedSize("");
+    setQuantity(1);
+  };
   return (
     <section className="pt-6 ">
       <div className="container mb-16">
@@ -117,22 +151,28 @@ export default function ProductDetails() {
                 </div>
 
                 <div className="flex items-center  mt-2 space-x-1">
-                  <Button className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]">
+                  <Button
+                    onClick={decreaseQuantity}
+                    className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]"
+                  >
                     -
                   </Button>
                   <input
                     type="text"
                     readOnly
-                    value="1"
+                    value={quantity}
                     className="w-[65px] h-[40px] text-center border rounded font-semibold text-gray-700"
                   />
-                  <Button className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]">
+                  <Button
+                    onClick={increaseQuantity}
+                    className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]"
+                  >
                     +
                   </Button>
                 </div>
                 <div className="flex mt-4 items-center gap-2">
                   <div className="text-2xl font-bold text-gray-900">
-                    16 500 ₽{" "}
+                    {product.price} ₽{" "}
                     <span className="text-lg font-normal text-gray-500">
                       / шт.
                     </span>
@@ -142,7 +182,10 @@ export default function ProductDetails() {
                   </button>
                 </div>
                 <div className="mt-3 flex flex-col space-y-2">
-                  <Button className=" py-2 px-4 h-[47px] text-white rounded-lg font-normal transition">
+                  <Button
+                    onClick={handleAddToCart}
+                    className=" py-2 px-4 h-[47px] text-white rounded-lg font-normal transition"
+                  >
                     В корзину
                   </Button>
                   <Button className=" py-2 text-[11px] text-wrap px-4 h-[47px] rounded-lg bg-[#F0F1F3] text-black font-normal transition">
@@ -220,22 +263,31 @@ export default function ProductDetails() {
             </div>
 
             <div className="flex items-center  mt-2 space-x-1">
-              <Button className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]">
+              <Button
+                onClick={decreaseQuantity}
+                className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]"
+              >
                 -
               </Button>
               <input
                 type="text"
                 readOnly
-                value="1"
+                value={quantity}
                 className="w-[65px] h-[40px] text-center border rounded font-semibold text-gray-700"
               />
-              <Button className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]">
+              <Button
+                onClick={increaseQuantity}
+                className="w-[40px] h-[40px] border rounded text-xl font-semibold text-gray-700 bg-[#fff] hover:bg-[#fff]"
+              >
                 +
               </Button>
             </div>
 
             <div className="flex items-center justify-between mt-2 space-x-2">
-              <Button className="flex-1 py-2 px-4 h-[47px] text-white rounded-lg font-semibold transition">
+              <Button
+                onClick={handleAddToCart}
+                className="flex-1 py-2 px-4 h-[47px] text-white rounded-lg font-semibold transition"
+              >
                 В корзину
               </Button>
               <button className="text-yellow  transition">

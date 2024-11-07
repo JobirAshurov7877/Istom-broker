@@ -1,10 +1,5 @@
-import {
-  Consultation,
-  HomeCarousel,
-  NewProduct,
-  OurPartner,
-  OurPromotions,
-} from "@/components/client";
+import { Consultation, HomeCarousel, OurPartner } from "@/components/client";
+import ProductsList from "@/components/common/ProductsList";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -22,9 +17,13 @@ export default function Home() {
         </Button>
       </div>
       <HomeCarousel />
-      <NewProduct />
+      <div className="mt-16">
+        <ProductsList title="Наши новинки" />
+      </div>
       <OurPartner />
-      <OurPromotions />
+      <div className="mt-16">
+        <ProductsList title="Наши акции" />
+      </div>
       <Consultation />
     </section>
   );
